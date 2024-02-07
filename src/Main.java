@@ -4,19 +4,41 @@ import java.util.Scanner;
 public class Main {
     public static Scanner scan = new Scanner(System.in);
     public static ArrayList<String> greg = new ArrayList<String>(10);
+
+    public static boolean done = false;
     public static void main(String[] args) {
         greg.addAll(Arrays.asList("Thuggin","Thuggalicous","Big Thug", "Lil Thug","Medium Thug",
                                 "Kinda Thug", "Hecka Thug", "Mega Thug", "Complete Thug", "Thugmazing"
         ));
 
-        Helper.getRegExString(scan, "Would you like to A - Add an item to the list,\nD - Delete an Item from the List\nP - Print the List\nQ - Quit the Program", "AaDdPpQq");
+        String choice = "";
+        String newWord = "";
+        int delNum = 0;
+        do {
 
+
+            choice = Helper.getRegExString(scan, "Would you like to \nA - Add an item to the list,\nD - Delete an Item from the List\nP - Print the List\nQ - Quit the Program", "[AaDdPpQq]");
+
+            if (choice.equalsIgnoreCase("a")) {
+
+                newWord = Helper.getNonZeroLengString(scan, "Enter your word: ");
+                addString(newWord);
+            } else if (choice.equalsIgnoreCase("d")) {
+                delNum = Helper.getInt(scan, "Enter the index of the word you want to delete: ");
+                deleteString(delNum);
+
+            } else if (choice.equalsIgnoreCase("p")) {
+                printList();
+            } else if (choice.equalsIgnoreCase("q")) {
+                quit();
+            }
+        }while(!done);
 
     }
 
-    public static void addString(Scanner scan, String prompt,String input){
+    public static void addString(String input){
         boolean valid = false;
-        System.out.println(prompt);
+
         do {
             if (input.length() > 0) {
                 greg.add(input);
@@ -27,8 +49,8 @@ public class Main {
         }while (!valid);
     }
 
-    public static void deleteString(Scanner scan, String prompt,int index){
-        System.out.println(prompt);
+    public static void deleteString(int index){
+
         boolean valid = false;
 
         do {
@@ -40,5 +62,13 @@ public class Main {
             }
         }while(!valid);
 
+    }
+
+    public static void printList(){
+            System.out.print(greg);
+    }
+
+    public static void quit(){
+        done = true;
     }
 }
